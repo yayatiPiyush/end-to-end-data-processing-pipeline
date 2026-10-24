@@ -7,13 +7,9 @@ A reliable, idempotent batch pipeline that ingests messy customer and order expo
 The pipeline tackles several common data quality issues found in the raw customer and order exports:
 
 1. **Inconsistent formats**: The raw data comes in a mix of JSON Lines (customers) and CSV (orders) formats, which need to be parsed and harmonized.
-
 2. **Messy and inconsistent values**: The raw data contains inconsistencies in date formats, money amounts, status codes, and country names. The pipeline cleans and standardizes these values.
-
 3. **Duplicates**: The exports may include exact duplicate records, which need to be identified and dropped.
-
 4. **Invalid or missing data**: Some records may have missing or invalid values for critical fields like customer ID, order ID, date, SKU, quantity, price, or currency. The pipeline validates these fields and quarantines records that fail the checks.
-
 5. **Stale data**: The exports may contain outdated versions of records. The pipeline keeps the newest valid version of each record based on the `updated_at` timestamp.
 
 By addressing these issues, the pipeline ensures that the loaded data is clean, consistent, and ready for analysis.
