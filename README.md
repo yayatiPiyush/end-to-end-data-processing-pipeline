@@ -91,7 +91,7 @@ python scripts\inspect_db.py
 Full list and reasoning in [docs/DESIGN.md](docs/DESIGN.md#assumptions). The ones that most affect results:
 
 - Each run receives a **full snapshot**; records missing from a later file are not deleted.
-- The source's `updated_at` orders versions of a record; ties go to the later line.
+- The source's `updated_at` orders versions of a record; ties go to the later line .
 - Slash dates are US `MM/DD/YYYY`.
 - An order without a valid key, customer, date, SKU, quantity, price or currency is rejected; a customer is only rejected for a missing or malformed id.
 - Prices are per unit in the order's currency; no FX conversion.
