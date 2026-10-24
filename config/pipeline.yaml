@@ -1,0 +1,63 @@
+# Pipeline configuration. Every path is relative to the repository root
+# unless absolute. Override any path from the CLI (see `python -m pipeline --help`).
+
+paths:
+  customers: data/raw/customers.jsonl
+  orders: data/raw/orders.csv
+  database: data/processed/warehouse.db
+  reports_dir: reports
+  logs_dir: logs
+
+# Reference date for "no future orders". null = the day the pipeline runs.
+# Pin it (e.g. "2026-10-21") to make validation fully reproducible.
+as_of_date: null
+
+# Explicit, ordered list of accepted input date formats. Formats are tried
+# in this order and the first that parses wins. We deliberately do NOT let a
+# library guess: "03/04/2025" is ambiguous, and the source systems export
+# US-style month/day, so %m/%d/%Y is listed and %d/%m/%Y is not.
+date_formats:
+  - "%Y-%m-%d"
+  - "%m/%d/%Y"
+  - "%d %b %Y"
+
+orders:
+  id_pattern: "^O\\d{6}$"
+  min_order_date: "2020-01-01"   # business went live; earlier dates are bad data
+  sku_pattern: "^SKU-\\d{3}$"
+  valid_currencies: [USD, EUR, GBP, INR]
+  # Raw status spellings -> canonical status. Unknown values are kept as
+  # "unknown" and flagged (warning), not rejected: the order still happened.
+  status_map:
+    pending: pending
+    shipped: shipped
+    delivered: delivered
+    cancelled: cancelled
+    canceled: cancelled
+    returned: returned
+
+customers:
+  id_pattern: "^C\\d{5}$"
+  # Free-text country values -> ISO 3166-1 alpha-2. Matching is case-
+  # insensitive and ignores dots/extra spaces.
+  country_map:
+    us: US
+    usa: US
+    united states: US
+    in: IN
+    india: IN
+    de: DE
+    germany: DE
+    deutschland: DE
+    gb: GB
+    uk: GB
+    united kingdom: GB
+
+quality:
+  # Circuit breaker: if more than this share of an entity's rows is rejected,
+  # the run aborts before writing anything. A sudden spike in rejects usually
+  # means an upstream format change, not a burst of bad orders, and loading a
+  # partial dataset silently is worse than failing loudly.
+  max_reject_rate:
+    customers: 0.05
+    orders: 0.15

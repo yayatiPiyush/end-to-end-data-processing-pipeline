@@ -1,0 +1,7 @@
+order_id,customer_id,order_date,sku,quantity,unit_price_cents,total_cents,currency,status,source_updated_at,dq_flags
+O000001,C00001,2025-03-01,SKU-001,2,129900,259800,USD,shipped,2025-03-02T00:00:00,
+O000002,C00002,2025-03-04,SKU-002,1,4950,4950,USD,delivered,2025-03-05T00:00:00,
+O000003,C00003,2025-04-01,SKU-003,1,1000,1000,EUR,unknown,2025-04-02T00:00:00,status_unrecognized
+O000007,C00001,2025-05-01,SKU-001,1,500,500,USD,delivered,2025-05-04T10:00:00,
+O000009,C00005,2025-06-01,SKU-005,3,10,30,GBP,returned,2025-06-02T00:00:00,
+O000010,C00003,2024-01-01,SKU-001,1,100,100,EUR,pending,2024-01-02T00:00:00,order_before_signup

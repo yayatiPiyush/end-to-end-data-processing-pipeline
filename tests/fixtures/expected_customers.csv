@@ -1,0 +1,5 @@
+customer_id,name,email,signup_date,city,country_code,source_updated_at,dq_flags
+C00001,Asha Rao,asha.rao@example.com,2024-01-15,Pune,IN,2025-01-01T00:00:00,
+C00002,Ben Ode,,2024-02-03,Austin,US,2025-01-01T00:00:00,email_invalid
+C00003,Cara Diaz,cara.diaz@example.com,2024-03-05,Berlin,DE,2025-02-01T00:00:00,
+C00005,Eve,eve@example.com,,Leeds,GB,2025-01-01T00:00:00,signup_date_in_future

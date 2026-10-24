@@ -1,0 +1,8 @@
+{"customer_id": "C00001", "name": "Asha  Rao", "email": " Asha.Rao@Example.COM ", "signup_date": "2024-01-15", "address": {"city": "Pune", "country": "India"}, "updated_at": "2025-01-01T00:00:00"}
+{"customer_id": " c00002 ", "name": "Ben Ode", "email": "ben@example", "signup_date": "02/03/2024", "address": {"city": "Austin", "country": "U.S."}, "updated_at": "2025-01-01T00:00:00"}
+{"customer_id": "C00003", "name": null, "email": "cara@example.com", "signup_date": "5 Mar 2024", "address": {"city": "Berlin", "country": "Atlantis"}, "updated_at": "2025-01-01T00:00:00"}
+{"customer_id": null, "name": "No Id", "email": "noid@example.com", "signup_date": "2024-01-01", "address": {"city": "Austin", "country": "US"}, "updated_at": "2025-01-01T00:00:00"}
+{"customer_id": "C00001", "name": "Asha  Rao", "email": " Asha.Rao@Example.COM ", "signup_date": "2024-01-15", "address": {"city": "Pune", "country": "India"}, "updated_at": "2025-01-01T00:00:00"}
+{"customer_id": "C00003", "name": "Cara Diaz", "email": "cara.diaz@example.com", "signup_date": "5 Mar 2024", "address": {"city": "Berlin", "country": "DE"}, "updated_at": "2025-02-01T00:00:00"}
+{"customer_id": "C00004", "name": "Broken
+{"customer_id": "C00005", "name": "Eve", "email": "eve@example.com", "signup_date": "2099-01-01", "address": {"city": "Leeds", "country": "uk"}, "updated_at": "2025-01-01T00:00:00"}
