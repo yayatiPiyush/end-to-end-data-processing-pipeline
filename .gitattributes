@@ -1,0 +1,3 @@
+# Force LF line endings for data files so CI regeneration matches
+*.csv text eol=lf
+*.jsonl text eol=lf
