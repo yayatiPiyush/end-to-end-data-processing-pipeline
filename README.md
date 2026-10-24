@@ -2,6 +2,22 @@
 
 A reliable, idempotent batch pipeline that ingests messy customer and order exports (JSON Lines + CSV), cleans and validates them, and loads analysis-ready tables into SQLite, with every rejected record quarantined and explained.
 
+## Data Issues Addressed
+
+The pipeline tackles several common data quality issues found in the raw customer and order exports:
+
+1. **Inconsistent formats**: The raw data comes in a mix of JSON Lines (customers) and CSV (orders) formats, which need to be parsed and harmonized.
+
+2. **Messy and inconsistent values**: The raw data contains inconsistencies in date formats, money amounts, status codes, and country names. The pipeline cleans and standardizes these values.
+
+3. **Duplicates**: The exports may include exact duplicate records, which need to be identified and dropped.
+
+4. **Invalid or missing data**: Some records may have missing or invalid values for critical fields like customer ID, order ID, date, SKU, quantity, price, or currency. The pipeline validates these fields and quarantines records that fail the checks.
+
+5. **Stale data**: The exports may contain outdated versions of records. The pipeline keeps the newest valid version of each record based on the `updated_at` timestamp.
+
+By addressing these issues, the pipeline ensures that the loaded data is clean, consistent, and ready for analysis.
+
 ## What it does
 
 1. **Ingest** `data/raw/customers.jsonl` and `data/raw/orders.csv` as raw strings. Unreadable files stop the run; unreadable lines are captured with their line number.
@@ -18,9 +34,28 @@ A reliable, idempotent batch pipeline that ingests messy customer and order expo
    cd end-to-end-data-processing-pipeline
    ```
 
-2. Create a virtual environment and install the required dependencies:
+2. Create a virtual environment and activate it:
+
+   - For Unix/macOS:
+     ```bash
+     python -m venv .venv
+     source .venv/bin/activate
+     ```
+
+   - For Windows (Command Prompt):
+     ```bash
+     python -m venv .venv
+     .venv\Scripts\activate.bat
+     ```
+
+   - For Windows (PowerShell):
+     ```powershell
+     python -m venv .venv
+     .venv\Scripts\Activate.ps1
+     ```
+
+3. Install the required dependencies:
    ```bash
-   python -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
    pip install -r requirements-dev.txt
    ```
 
@@ -42,7 +77,10 @@ The pipeline generates the following output files:
 - `reports/latest.json` and `reports/runs/<run_id>.json`: Full statistics per run.
 - `logs/pipeline.log`: Log lines tagged with the run ID.
 
-Note: The `warehouse.db` file represents the state after the latest successful run of the pipeline. You can use this file to explore the loaded data and run queries.
+Note: The `warehouse.db` file represents the state after the latest successful run of the pipeline. You can use this file to explore the loaded data and run queries. To inspect the `warehouse.db` file, run:
+```bash
+python scripts\inspect_db.py
+```
 
 ## Additional Commands
 
@@ -51,7 +89,6 @@ Note: The `warehouse.db` file represents the state after the latest successful r
 - `python -m pipeline rules`: Print the validation rule catalogue.
 - `make test` or `make coverage`: Run the test suite.
 - `python scripts/walkthrough.py`: Run the pipeline stages one at a time, printing the output of each stage and saving intermediate CSVs in `walkthrough_output/`.
-- `python scripts/inspect_db.py`: Print a health summary of the database (no `sqlite3` CLI needed).
 
 ## Key assumptions
 
@@ -64,4 +101,3 @@ Full list and reasoning in [docs/DESIGN.md](docs/DESIGN.md#assumptions). The one
 - Prices are per unit in the order's currency; no FX conversion.
 
 For more details on the pipeline's architecture, design decisions, deliverables, configuration, project layout, and extensibility, please refer to the documentation in the `docs/` directory.
-
